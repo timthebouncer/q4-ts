@@ -1,0 +1,12 @@
+.header-wrapper{
+  @apply flex justify-between m-5
+}
+.left-section{
+    @apply flex
+}
+.right-section{
+    @apply flex
+}
+.avatar{
+    @apply w-8
+}
