@@ -4,8 +4,8 @@ import { createContext } from 'use-context-selector';
 import routes from "./route/route";
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
 
-        const authContext = createContext<{} | null>(null)
-        const userListContext = createContext<{} | null>(null)
+       export const authContext = createContext<{} | null>(null)
+       export const userListContext = createContext<{} | null>(null)
 
 type IUser={
     imgLink:string;

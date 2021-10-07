@@ -1,12 +1,14 @@
-import React, {Dispatch, FC, SetStateAction} from 'react'
-import './header.css'
-import {collapseIcon, bellIcon, logoutIcon} from "@/Icon/svg";
+import React, {useState, useEffect, FC, Dispatch, SetStateAction} from 'react'
+import NavBar from '../SideBar/navBar'
+import Header from '../../component/Header/header'
+import service from '../../api/api'
+import {authContext} from '../../App'
+import {useContextSelector} from "use-context-selector";
 
 
-type Props={
-    switchMenu:boolean;
-    setSwitchMenu:Dispatch<SetStateAction<boolean>>;
-    userData: UserType | null
+type IUser={
+    userData:UserType | null;
+    setUserData:Dispatch<SetStateAction<UserType>>;
 }
 
 type UserType={
@@ -15,42 +17,51 @@ type UserType={
 };
 
 
-const Header:FC<Props>=(props:Props)=>{
+const Layout:FC=({children})=>{
 
-    const {switchMenu,setSwitchMenu, userData} = props
+    const [isValidating, setValidating] = useState<boolean>(true)
+    const [userData, setUserData]= useContextSelector<IUser>(authContext,e=>[e.userData, e.setUserData])
+    const [switchMenu, setSwitchMenu] = useState<boolean>(false)
 
+    // let token =localStorage.getItem('token')
+    // let config={
+    //     headers: {"Authorization" : `Bearer ${token}`}
+    // }
+    //
+    // const initApp= async ()=>{
+    //
+    //     const {success, data} = await new Promise(response =>
+    //         setTimeout(()=>{
+    //             service.Auth.userAuth(config)
+    //                 .then((res:[])=>{
+    //                     response({success:true, data:res.data.data})
+    //                 })
+    //         },500)
+    //
+    //     )
+    //     if(success){
+    //         setUserData(data)
+    //         setValidating(false)
+    //     }
+    //
+    // }
+    //
+    // useEffect(initApp,[])
+    //
+    // if(isValidating)return "Loading..."
 
     return(
-        <div>
-            <div className='header-wrapper'>
-                <div className="left-section">
-                    <div>LOGO</div>
-                    <div onClick={()=>setSwitchMenu(!switchMenu)} className="collapse-icon cursor-pointer">
-                        {collapseIcon}
-                    </div>
+        <div className="layout-wrapper">
+            <Header switchMenu={switchMenu} setSwitchMenu={setSwitchMenu} userData={userData} />
+            <div className="flex">
+                <div className="border-r-2 border-black">
+                    <NavBar switchMenu={switchMenu} userData={userData} />
                 </div>
-                <div className="right-section">
-                    <div className="bell-icon">
-                        {bellIcon}
-                    </div>
-                    {
-                        userData !== null ? <>
-                            <div className="avatar"><img src={userData.imgLink?userData.imgLink:''} /></div>
-                            <div className="user-info">{userData.username}</div>
-                            <div className="logout-btn">
-                                <button>
-                                    {logoutIcon}
-                                </button>
-                            </div></>: ''
-                    }
-
+                <div className="component-wrapper w-full">
+                    {children}
                 </div>
             </div>
-            <hr className='border-b-1 border-black' />
         </div>
-
     )
-
 }
-
-export default Header
+export default Layout
