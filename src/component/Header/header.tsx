@@ -6,12 +6,13 @@ import {collapseIcon, bellIcon, logoutIcon} from "../../Icon/svg";
 type Props={
     switchMenu:boolean;
     setSwitchMenu:Dispatch<SetStateAction<boolean>>;
-    userData: UserType | null
+    userData: IUser | null
 }
 
-type UserType={
+type IUser={
     imgLink:string;
-    username:string;
+    username:string | null
+    name:string;
 };
 
 

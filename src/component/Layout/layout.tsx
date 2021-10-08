@@ -6,21 +6,12 @@ import {authContext} from '../../App'
 import {useContextSelector} from "use-context-selector";
 
 
-type IUser={
-    userData:UserType | null;
-    setUserData:Dispatch<SetStateAction<UserType>>;
-}
-
-type UserType={
-    imgLink:string;
-    username:string;
-};
 
 
 const Layout:FC=({children})=>{
 
     const [isValidating, setValidating] = useState<boolean>(true)
-    const [userData, setUserData]= useContextSelector<IUser>(authContext,e=>[e.userData, e.setUserData])
+    const [userData, setUserData]= useContextSelector(authContext,(e)=> [e.userData, e.setUserData])
     const [switchMenu, setSwitchMenu] = useState<boolean>(false)
 
     // let token =localStorage.getItem('token')
@@ -52,15 +43,19 @@ const Layout:FC=({children})=>{
 
     return(
         <div className="layout-wrapper">
-            <Header switchMenu={switchMenu} setSwitchMenu={setSwitchMenu} userData={userData} />
-            <div className="flex">
-                <div className="border-r-2 border-black">
-                    <NavBar switchMenu={switchMenu} userData={userData} />
-                </div>
-                <div className="component-wrapper w-full">
-                    {children}
-                </div>
-            </div>
+            {
+                userData !== null ? <>
+                    <Header switchMenu={switchMenu} setSwitchMenu={setSwitchMenu} userData={userData} />
+                    <div className="flex">
+                        <div className="border-r-2 border-black">
+                            <NavBar switchMenu={switchMenu} />
+                        </div>
+                        <div className="component-wrapper w-full">
+                            {children}
+                        </div>
+                    </div>
+                </>:''
+            }
         </div>
     )
 }

@@ -1,6 +1,16 @@
-import axios from "axios";
+import axios,{ AxiosInstance, AxiosRequestConfig } from "axios";
 import router from "../route/route";
 
+interface Interceptors {
+  hook(instance: AxiosInstance): void;
+}
+
+type IConfig={
+  baseURL:string;
+  headers:null;
+  interceptors: Interceptors | null;
+  timeout: number
+}
 
 // create an axios instance
 const service = axios.create({

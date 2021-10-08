@@ -1,10 +1,10 @@
 import './App.css';
-import React, {useState, Suspense, FC, ReactNode} from 'react'
+import React, {useState, Suspense, FC, ReactNode, Dispatch, SetStateAction} from 'react'
 import { createContext } from 'use-context-selector';
 import routes from "./route/route";
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
 
-       export const authContext = createContext<{} | null>(null)
+       export const authContext = createContext<{ userData: IUser | null, setUserData: Dispatch<SetStateAction<IUser | null>> }>(null as any)
        export const userListContext = createContext<{} | null>(null)
 
 type IUser={
@@ -24,7 +24,7 @@ type IUserList={
 function App() {
 
     const AuthProvider:FC=({children})=>{
-        const[userData, setUserData] = useState<IUser[]>([])
+        const[userData, setUserData] = useState<IUser | null>(null)
         const[token, setToken] = useState<string>("")
         return(
         <authContext.Provider value={{userData, setUserData}}>
