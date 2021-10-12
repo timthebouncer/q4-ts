@@ -1,21 +1,26 @@
-import React, {Dispatch, FC, SetStateAction, useState} from 'react'
+import React, {ChangeEvent, Dispatch, FC, SetStateAction, useState} from 'react'
 import service from "../../../api/api";
 import {AxiosResponse} from "axios";
-import IUser from '../../../types/storeTypes'
+import IUserLogin, {IUser} from '../../../types/storeTypes'
 
-type IUserLogin={
-    username:string;
-    password:string;
-    // setState:Dispatch<SetStateAction<string>>;
+
+const initialState:IUserLogin = {
+    username: '',
+    password: '',
+};
+
+type IUserData={
+    token:string | null
 }
-
-
 
 
 const Login:FC=()=>{
 
-    const [state, setState]= useState<IUserLogin | {username:'',password:''}>({username:'',password:''})
+    const [state, setState]= useState(initialState)
 
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setState({ ...state, [event.target.name]: event.target.value });
+    };
 
     const loginFun=async()=>{
 
@@ -25,9 +30,11 @@ const Login:FC=()=>{
         }
 
         await service.Login.userLogin(data)
-            .then((res:AxiosResponse<IUser>)=>{
+            .then((res:AxiosResponse<IUserData>)=>{
                 console.log(res)
-                // localStorage.setItem('token', res.data.token)
+                if (res.data.token != null) {
+                    localStorage.setItem('token', res.data.token as IUserData)
+                }
                 // setToken(res.data.token)
                 // message.success(res.data.message,'success')
                 // if(res.data.data){
@@ -41,8 +48,8 @@ const Login:FC=()=>{
 
     return(
         <div>
-            帳號<input value={state.username} onChange={(e)=>setState(e.target.value)} type="text"/>
-            密碼<input value={state.password} onChange={(e)=>setState(e.target.value)} type="text"/>
+            帳號<input name='username' onChange={handleChange} type="text"/>
+            密碼<input name='password' onChange={handleChange} type="text"/>
             <button onClick={loginFun}>登入</button>
         </div>
     )
