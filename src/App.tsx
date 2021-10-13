@@ -3,15 +3,12 @@ import React, {useState, Suspense, FC, ReactNode, Dispatch, SetStateAction} from
 import { createContext } from 'use-context-selector';
 import routes from "./route/route";
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
+import IUserInfo from './types/storeTypes'
 
-       export const authContext = createContext<{ userData: IUser | null, setUserData: Dispatch<SetStateAction<IUser | null>> }>(null as any)
+       export const authContext = createContext<{ userData: IUserInfo | null, setUserData: Dispatch<SetStateAction<IUserInfo | null>> }>(null as any)
        export const userListContext = createContext<{} | null>(null)
 
-type IUser={
-    imgLink:string;
-    name:string;
-    username:string | null;
-}
+
 
 type IUserList={
     _id: string;
@@ -24,7 +21,7 @@ type IUserList={
 function App() {
 
     const AuthProvider:FC=({children})=>{
-        const[userData, setUserData] = useState<IUser | null>(null)
+        const[userData, setUserData] = useState<IUserInfo | null>(null)
         const[token, setToken] = useState<string>("")
         return(
         <authContext.Provider value={{userData, setUserData}}>

@@ -1,10 +1,23 @@
 import request from './http'
 import IUserLogin from"../types/storeTypes"
 
+
+interface IUserInfo {
+  name: string | null;
+  role: string;
+  username: string;
+  _id: string;
+  message: string;
+  success: boolean;
+  token: string;
+}
 const api={
 
 Login:{
-  userLogin(data:IUserLogin) {
+  userLogin(data: {
+    username: string,
+    password: string
+  }) {
     return request.post('/login', data)
   },
 },

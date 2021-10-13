@@ -2,21 +2,21 @@ import React, {ChangeEvent, Dispatch, FC, SetStateAction, useState} from 'react'
 import service from "../../../api/api";
 import {AxiosResponse} from "axios";
 import IUserLogin, {IUser} from '../../../types/storeTypes'
+import {authContext} from '../../../App'
+
+import {useContextSelector} from "use-context-selector";
 
 
-const initialState:IUserLogin = {
+const initialState = {
     username: '',
     password: '',
 };
-
-type IUserData={
-    token:string | null
-}
 
 
 const Login:FC=()=>{
 
     const [state, setState]= useState(initialState)
+    const [setUserData]= useContextSelector(authContext,e=>[e.setUserData])
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setState({ ...state, [event.target.name]: event.target.value });
@@ -24,16 +24,18 @@ const Login:FC=()=>{
 
     const loginFun=async()=>{
 
-        let data:IUserLogin={
-            username:state.username,
-            password:state.password
-        }
+        // let data:IUserLogin={
+        //     username:state.username,
+        //     password:state.password
+        // }
 
-        await service.Login.userLogin(data)
-            .then((res:AxiosResponse<IUserData>)=>{
+        await service.Login.userLogin(state)
+            .then((res)=>{
                 console.log(res)
+
                 if (res.data.token != null) {
-                    localStorage.setItem('token', res.data.token as IUserData)
+                    localStorage.setItem('token', res.data.token)
+                    setUserData(res.data)
                 }
                 // setToken(res.data.token)
                 // message.success(res.data.message,'success')
