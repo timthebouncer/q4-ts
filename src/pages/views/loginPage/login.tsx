@@ -1,8 +1,8 @@
 import React, {ChangeEvent, Dispatch, FC, SetStateAction, useState} from 'react'
 import service from "../../../api/api";
-import {AxiosResponse} from "axios";
-import IUserLogin, {IUser} from '../../../types/storeTypes'
 import {authContext} from '../../../App'
+import { useHistory } from "react-router-dom";
+
 
 import {useContextSelector} from "use-context-selector";
 
@@ -11,10 +11,8 @@ const initialState = {
     username: '',
     password: '',
 };
-
-
 const Login:FC=()=>{
-
+    const history = useHistory()
     const [state, setState]= useState(initialState)
     const [setUserData]= useContextSelector(authContext,e=>[e.setUserData])
 
@@ -23,12 +21,6 @@ const Login:FC=()=>{
     };
 
     const loginFun=async()=>{
-
-        // let data:IUserLogin={
-        //     username:state.username,
-        //     password:state.password
-        // }
-
         await service.Login.userLogin(state)
             .then((res)=>{
                 console.log(res)
@@ -37,10 +29,9 @@ const Login:FC=()=>{
                     localStorage.setItem('token', res.data.token)
                     setUserData(res.data)
                 }
-                // setToken(res.data.token)
                 // message.success(res.data.message,'success')
                 // if(res.data.data){
-                    // history.push('/index')
+                    history.push('/index')
                 // }
             })
             .catch((err)=>{

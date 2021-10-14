@@ -1,16 +1,13 @@
 import request from './http'
-import IUserLogin from"../types/storeTypes"
+import {IUserInfo,IUserList,FormDataValue,UploadInfo} from"../types/storeTypes"
+import {AxiosResponse} from "axios";
 
 
-interface IUserInfo {
-  name: string | null;
-  role: string;
-  username: string;
-  _id: string;
-  message: string;
-  success: boolean;
-  token: string;
+let token =localStorage.getItem('token')
+let config={
+  headers: {"Authorization" : `Bearer ${token}`}
 }
+
 const api={
 
 Login:{
@@ -18,7 +15,10 @@ Login:{
     username: string,
     password: string
   }) {
-    return request.post('/login', data)
+    return request.post<{
+      username: string,
+      password: string
+    },AxiosResponse<IUserInfo>>('/login', data)
   },
 },
 // Register:{
@@ -26,16 +26,16 @@ Login:{
 //     return request.post('/register',data)
 //   }
 // },
-// Auth:{
-//   userAuth(params){
-//     return request.get('/user',params)
-//   }
-// },
-// Upload:{
-//   userImg(formData,config){
-//     return request.post('/users/uploadPicture',formData,config)
-//   }
-// },
+Auth:{
+  userAuth(){
+    return request.get<AxiosResponse<IUserList>>('/user',config)
+  }
+},
+Upload:{
+  userImg(formData:FormDataValue){
+    return request.post<FormDataValue,AxiosResponse<UploadInfo>>('/users/uploadPicture',formData,config)
+  }
+},
 // User:{
 //   updateUsername(data,config){
 //     return request.put('/users/updateName',data,config)
@@ -49,4 +49,4 @@ Login:{
 
 
 
-export default api
+export default api;

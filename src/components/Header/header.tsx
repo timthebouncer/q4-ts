@@ -1,24 +1,19 @@
 import React, {Dispatch, FC, SetStateAction} from 'react'
 import './header.css'
 import {collapseIcon, bellIcon, logoutIcon} from "../../Icon/svg";
-
+import {IUserList} from '../../types/storeTypes'
 
 type Props={
     switchMenu:boolean;
     setSwitchMenu:Dispatch<SetStateAction<boolean>>;
-    userData: IUser | null
+    userList: IUserList | null
 }
 
-type IUser={
-    imgLink:string;
-    username:string | null
-    name:string;
-};
 
 
 const Header:FC<Props>=(props:Props)=>{
 
-    const {switchMenu,setSwitchMenu, userData} = props
+    const {switchMenu,setSwitchMenu, userList} = props
 
 
     return(
@@ -35,9 +30,9 @@ const Header:FC<Props>=(props:Props)=>{
                         {bellIcon}
                     </div>
                     {
-                        userData !== null ? <>
-                            <div className="avatar"><img src={userData.imgLink?userData.imgLink:''} /></div>
-                            <div className="user-info">{userData.username}</div>
+                        userList !== null ? <>
+                            <div className="avatar"><img src={userList.link?userList.link:''} /></div>
+                            <div className="user-info">{userList.username}</div>
                             <div className="logout-btn">
                                 <button>
                                     {logoutIcon}

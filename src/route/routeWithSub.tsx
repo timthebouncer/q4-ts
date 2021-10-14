@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React, {useState,FC} from "react";
 import {userIcon, chevronDown, chevronUp} from '../Icon/svg'
-// import ToolTip from "../component/";
+// import ToolTip from "../components/";
 
 type Props={
   item:any

@@ -3,19 +3,14 @@ import React, {useState, Suspense, FC, ReactNode, Dispatch, SetStateAction} from
 import { createContext } from 'use-context-selector';
 import routes from "./route/route";
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
-import IUserInfo from './types/storeTypes'
+import {IUserInfo,IUserList} from './types/storeTypes'
 
        export const authContext = createContext<{ userData: IUserInfo | null, setUserData: Dispatch<SetStateAction<IUserInfo | null>> }>(null as any)
-       export const userListContext = createContext<{} | null>(null)
+       export const userListContext = createContext<{ userList: IUserList | null, setUserList:Dispatch<SetStateAction<IUserList | null>> }>(null as any)
 
 
 
-type IUserList={
-    _id: string;
-    name: string | null;
-    username: string;
-    role: string;
-}
+
 
 
 function App() {
@@ -31,7 +26,7 @@ function App() {
     }
 
     const UserListProvider:FC=({children})=>{
-        const [userList, setUserList] = useState<IUserList[]>([])
+        const [userList, setUserList] = useState<IUserList | null>(null)
         return(
             <userListContext.Provider value={{userList, setUserList}}>
                 {children}

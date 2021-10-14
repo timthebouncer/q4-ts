@@ -1,7 +1,7 @@
 import React, {lazy, Suspense} from "react";
 
 
-// import Layout from "@/component/Layout/layout";
+import Layout from "@/components/Layout/layout";
 import Login from '@/pages/views/loginPage/login'
 import Register from "@/pages/views/registerPage/Register"
 import Index from "@/pages/views/indexPage/IndexPage"
@@ -20,7 +20,7 @@ import NotFound from "@/pages/views/notFoundPage"
 
 
 // const Index = lazy(() =>
-//     import('@/pages/views/indexPage')
+//     import('../pages/views/indexPage/IndexPage')
 //         .then(({ Index }) => ({ default: Index })),
 // );
 
@@ -47,7 +47,7 @@ const routes=[
   {
     path: "/index",
     name: "Index",
-    component:Index,
+    component:()=><Layout><Index /></Layout>,
   },
   {
     name:'個人資訊管理',
