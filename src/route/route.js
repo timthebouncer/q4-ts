@@ -56,7 +56,7 @@ const routes=[
       {
         path:'/account/profile-setting',
         name:'帳戶設定',
-        component:UserInfo
+        component:()=><Layout><UserInfo /></Layout>,
       }
     ]
   },
@@ -67,17 +67,17 @@ const routes=[
       {
         path:'/user/list',
         name:'列表式',
-        component:List,
+        component:()=><Layout><List /></Layout>,
       },
       {
         path:'/user/form',
         name:'表格式',
-        component:FormList
+        component:()=><Layout><FormList /></Layout>,
       },
       {
         path:'/user/userDetail',
         name:'會員詳情',
-        component:UserDetail,
+        component:()=><Layout><UserDetail /></Layout>,
       }
     ]
   },

@@ -28,9 +28,9 @@ const RouteWithSubRoutes:FC<Props>=({item,index,switchMenu})=> {
                           <i onClick={()=>setDirection(true)} className={'mt-1.5'}>{chevronUp}</i>
                   }</>:<>
                 {/*<ToolTip text={item.name}>*/}
-                {/*        <span className={"m-0 h-8"}>*/}
-                {/*        {userIcon}*/}
-                {/*      </span>*/}
+                        <span className={"m-0 h-8"}>
+                        {userIcon}
+                      </span>
                 {/*</ToolTip>*/}
               </>
             }

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, FC, Dispatch, SetStateAction} from 'react'
+import React, {useState, useEffect, FC} from 'react'
 import NavBar from '../SideBar/navBar'
 import Header from '../Header/header'
 import service from '../../api/api'
@@ -31,14 +31,16 @@ const Layout:FC=({children})=>{
             }
 
         }
-        initApp().then(r => r)
+        initApp()
     },[])
 
 
 
-    // useEffect(initApp,[])
+    // useEffect(() => {
+    //     initApp()
+    // },[])
 
-    // if(isValidating)return "Loading..."
+    if(isValidating)return <>"Loading..."</>
 
     return(
         <div className="layout-wrapper">

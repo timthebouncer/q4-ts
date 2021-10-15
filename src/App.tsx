@@ -3,13 +3,13 @@ import React, {useState, Suspense, FC, ReactNode, Dispatch, SetStateAction} from
 import { createContext } from 'use-context-selector';
 import routes from "./route/route";
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
-import {IUserInfo,IUserList} from './types/storeTypes'
+import {IUserInfo,IUserList, IAllUserList} from './types/storeTypes'
 
        export const authContext = createContext<{ userData: IUserInfo | null, setUserData: Dispatch<SetStateAction<IUserInfo | null>> }>(null as any)
        export const userListContext = createContext<{ userList: IUserList | null, setUserList:Dispatch<SetStateAction<IUserList | null>> }>(null as any)
-
-
-
+        export const UserWaterFall = createContext<{waterFall: IAllUserList, setWaterFall:Dispatch<SetStateAction<IAllUserList>>,
+            totalPage:number, setTotalPage:Dispatch<SetStateAction<number>>,scrollState:number, setScrollState:Dispatch<SetStateAction<number>>,
+            currentPage:number, setCurrent:Dispatch<SetStateAction<number>> }>(null as any)
 
 
 
@@ -34,6 +34,18 @@ function App() {
         )
     }
 
+    const UserWaterFallProvider:FC=({children})=>{
+        const [waterFall, setWaterFall] = useState<IAllUserList>([])
+        const [totalPage, setTotalPage] = useState(0)
+        const [scrollState, setScrollState] = useState(0)
+        const [currentPage, setCurrent] = useState(0)
+        return(
+            <UserWaterFall.Provider value={{waterFall,setWaterFall,totalPage, setTotalPage,scrollState, setScrollState,currentPage, setCurrent}}>
+                {children}
+            </UserWaterFall.Provider>
+        )
+    }
+
 
 
   return (
@@ -42,21 +54,23 @@ function App() {
           <Suspense fallback={"Loading..."}>
             <AuthProvider>
               <UserListProvider>
-                <Switch>
-                  {routes.map((item, i) => {
-                    return(
-                        <Route key={i} {...item} path={item.path} exact={item.exact} component={item.routes? ()=>{
-                          return item.routes.map((route,idx)=>{
-                            return(
-                                <Switch>
-                                  <Route key={idx} path={route.path} component={route.component} />
-                                </Switch>
-                            )
-                          })
-                        }:item.component} />
-                    )
-                  })}
-                </Switch>
+               <UserWaterFallProvider>
+               <Switch>
+                   {routes.map((item, i) => {
+                       return(
+                           <Route key={i} {...item} path={item.path} exact={item.exact} component={item.routes? ()=>{
+                               return item.routes.map((route,idx)=>{
+                                   return(
+                                       <Switch>
+                                           <Route key={idx} path={route.path} component={route.component} />
+                                       </Switch>
+                                   )
+                               })
+                           }:item.component} />
+                       )
+                   })}
+               </Switch>
+               </UserWaterFallProvider>
               </UserListProvider>
             </AuthProvider>
           </Suspense>

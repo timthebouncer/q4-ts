@@ -1,0 +1,16 @@
+.login-wrapper{
+    @apply max-w-screen-sm bg-gray-100 m-auto transform translate-y-44
+    /*position: relative;*/
+    /*top: 25%;*/
+    /*margin: auto;*/
+    /*/maxwidth*/
+}
+.formWrapper{
+    @apply flex justify-around items-center flex-col h-80
+}
+.register-btn{
+    @apply text-blue-300
+}
+.submit-btn{
+    @apply font-bold py-2 px-4 rounded bg-blue-500 text-white
+}

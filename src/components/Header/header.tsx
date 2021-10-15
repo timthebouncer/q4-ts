@@ -31,7 +31,7 @@ const Header:FC<Props>=(props:Props)=>{
                     </div>
                     {
                         userList !== null ? <>
-                            <div className="avatar"><img src={userList.link?userList.link:''} /></div>
+                            <div className="avatar"><img src={userList.imgLink?userList.imgLink:''} /></div>
                             <div className="user-info">{userList.username}</div>
                             <div className="logout-btn">
                                 <button>

@@ -9,9 +9,9 @@ import {Switch} from 'react-router-dom'
 import { IUserList } from "../../../types/storeTypes";
 
 
-async function handleUpload(e: React.ChangeEvent<HTMLInputElement>, userData: IUserList | null, setUserData: React.Dispatch<React.SetStateAction<IUserList | null>>) {
+async function handleUpload(e: React.FormEvent<HTMLInputElement>, userList: IUserList | null, setUserList: React.Dispatch<React.SetStateAction<IUserList | null>>) {
     // @ts-ignore
-    uploadFile(e.target.files[0], userData, setUserData);
+    uploadFile(e.target.files[0], userList, setUserList);
     // showPreviewImage(e.target.files[0])
 
 }
@@ -20,26 +20,26 @@ async function handleUpload(e: React.ChangeEvent<HTMLInputElement>, userData: IU
     // avatar.src = URL.createObjectURL(fileObj);
 // }
 
-function uploadFile(fileObj: string | Blob, userData: IUserList | null, setUserData: { (value: React.SetStateAction<IUserList | null>): void; (arg0: any): void; }) {
+function uploadFile(fileObj: string | Blob, userList: IUserList | null, setUserList: { (value: React.SetStateAction<IUserList | null>): void; (arg0: any): void; }) {
 
     const formData = new FormData()
     formData.append('image',fileObj)
     service.Upload.userImg(formData)
         .then((res)=>{
+            console.log(userList,1)
             // message.success(res.data.message,'success')
-            setUserData({...userData,link:res.data.data})
+            setUserList({...userList,imgLink:res.data.data})
         })
 }
 
 const Profile=()=>{
     const [userList, setUserList]= useContextSelector(userListContext,e=>[e.userList, e.setUserList])
-
     return(
         <div>
             帳戶設定
             <div>
                 {
-                    <img src={userList && userList.link ?userList.link:'https://via.placeholder.com/300x300/efefef?text=Avatar'}
+                    <img src={userList && userList.imgLink ?userList.imgLink:'https://via.placeholder.com/300x300/efefef?text=Avatar'}
                          alt="image-placeholder"
                          className="img-thumbnail w-40" data-target="image-preview" />
                 }

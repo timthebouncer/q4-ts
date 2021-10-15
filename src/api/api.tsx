@@ -1,5 +1,5 @@
 import request from './http'
-import {IUserInfo,IUserList,FormDataValue,UploadInfo} from"../types/storeTypes"
+import {IUserInfo,IUserList,UploadInfo} from"../types/storeTypes"
 import {AxiosResponse} from "axios";
 
 
@@ -32,8 +32,8 @@ Auth:{
   }
 },
 Upload:{
-  userImg(formData:FormDataValue){
-    return request.post<FormDataValue,AxiosResponse<UploadInfo>>('/users/uploadPicture',formData,config)
+  userImg(formData:FormData){
+    return request.post<FormData,AxiosResponse<UploadInfo>>('/users/uploadPicture',formData,config)
   }
 },
 // User:{
