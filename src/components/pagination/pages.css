@@ -1,0 +1,6 @@
+.unactivated{
+    @apply list-none px-3 cursor-pointer
+}
+.active{
+    @apply text-blue-400 list-none px-3 cursor-pointer
+}

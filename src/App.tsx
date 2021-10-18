@@ -17,7 +17,6 @@ function App() {
 
     const AuthProvider:FC=({children})=>{
         const[userData, setUserData] = useState<IUserInfo | null>(null)
-        const[token, setToken] = useState<string>("")
         return(
         <authContext.Provider value={{userData, setUserData}}>
             {children}
@@ -45,6 +44,15 @@ function App() {
             </UserWaterFall.Provider>
         )
     }
+    //
+    // const UserFormListProvider:FC=({children})=>{
+    //     const [userFormList, setUserFormList] = useState<IProp[]>([])
+    //     return(
+    //         <UserFormList.Provider value>
+    //             {children}
+    //         </UserFormList.Provider>
+    //     )
+    // }
 
 
 
