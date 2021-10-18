@@ -3,11 +3,11 @@ import React, {useState, Suspense, FC, ReactNode, Dispatch, SetStateAction} from
 import { createContext } from 'use-context-selector';
 import routes from "./route/route";
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
-import {IUserInfo,IUserList, IAllUserList} from './types/storeTypes'
+import {IUserInfo,IUserList, IAllUserList,IProp} from './types/storeTypes'
 
        export const authContext = createContext<{ userData: IUserInfo | null, setUserData: Dispatch<SetStateAction<IUserInfo | null>> }>(null as any)
        export const userListContext = createContext<{ userList: IUserList | null, setUserList:Dispatch<SetStateAction<IUserList | null>> }>(null as any)
-        export const UserWaterFall = createContext<{waterFall: IAllUserList, setWaterFall:Dispatch<SetStateAction<IAllUserList>>,
+        export const UserWaterFall = createContext<{waterFall: IProp[], setWaterFall:Dispatch<SetStateAction<IProp[]>>,
             totalPage:number, setTotalPage:Dispatch<SetStateAction<number>>,scrollState:number, setScrollState:Dispatch<SetStateAction<number>>,
             currentPage:number, setCurrent:Dispatch<SetStateAction<number>> }>(null as any)
 
@@ -35,7 +35,7 @@ function App() {
     }
 
     const UserWaterFallProvider:FC=({children})=>{
-        const [waterFall, setWaterFall] = useState<IAllUserList>([])
+        const [waterFall, setWaterFall] = useState<IProp[]>([])
         const [totalPage, setTotalPage] = useState(0)
         const [scrollState, setScrollState] = useState(0)
         const [currentPage, setCurrent] = useState(0)

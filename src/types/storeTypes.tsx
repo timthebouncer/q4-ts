@@ -1,7 +1,3 @@
-export default interface IUserLogin{
-    username:string;
-    password:string;
-};
 export interface IUserInfo {
     name: string | null;
     role: string;
@@ -23,13 +19,20 @@ export interface UploadInfo {
 export interface IAllUserList {
     success: boolean,
     message: string,
-    content: [
-        {
-            _id: string;
-            username: string;
-            name: string | null;
-            role: string;
-        }
-    ]
-    total: number,
+    data:{
+        content: IProp[];
+        total: number;
+    }
+}
+
+export interface IProp {
+    _id: string;
+    username: string;
+    name: string | null;
+    role: string;
+
+}
+export interface IUserParam{
+    page: number;
+    size: number;
 }

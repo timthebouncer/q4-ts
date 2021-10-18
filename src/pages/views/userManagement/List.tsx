@@ -1,5 +1,5 @@
 import React, {useEffect,useState,FC} from "react";
-// import service from "@/api/api";
+import service from "../../../api/api";
 import {Link} from 'react-router-dom'
 import {UserWaterFall} from '../../../App'
 import {useContextSelector} from "use-context-selector";
@@ -13,41 +13,34 @@ const List:FC=()=>{
     const [loading, setLoading] = useState(true)
     const [isBottom, setBottom] = useState(false)
 
-
     let total = 0;
 
     const getUserList=()=>{
 
-       let params:{
-            page: currentPage,
-            size: 10
-        }
 
+        service.User.getList({page:currentPage,size:10})
+            .then((res)=>{
+                const {data} = res.data
+                setTotalPage(data.total)
+                setWaterFall(waterFall=>[...waterFall, ...data.content])
 
-        // service.User.getList(config)
-        //     .then(({data})=>{
-        //         const {content,total:totalPage} = data.data
-        //         setWaterFall(waterFall=>[...waterFall, ...content])
-        //
-        //         setTotalPage(totalPage)
-        //
-        //         if(totalPage%10 !== 0){
-        //             total = Math.floor(totalPage/10) + 1
-        //             sessionStorage.setItem('total123',total)
-        //         }else {
-        //             total = Math.floor(totalPage/10)
-        //             sessionStorage.setItem('total123',total)
-        //         }
-        //         setLoading(false)
-        //         setBottom(false)
-        //     })
+                if(data.total%10 !== 0){
+                    total = Math.floor(data.total/10) + 1
+                    sessionStorage.setItem('total123',""+total)
+                }else {
+                    total = Math.floor(data.total/10)
+                    sessionStorage.setItem('total123',""+total)
+                }
+                setLoading(false)
+                setBottom(false)
+            })
     }
 
     const infiniteScroll=()=>{
         const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-        if(clientHeight + scrollTop > scrollHeight){
+        if(clientHeight + scrollTop >= scrollHeight){
             let totals = sessionStorage.getItem('total123')
-            if(parseInt(totals) === currentPage)return
+            if(Number(totals) === currentPage)return
             setBottom(true)
             setCurrent((currentPage) => currentPage + 1)
         }
@@ -55,7 +48,7 @@ const List:FC=()=>{
 
     useEffect(()=>{
         setTimeout(()=>{
-            window.scrollTo(0, parseInt(scrollState));
+            window.scrollTo(0, scrollState);
         },100)
     },[])
 
@@ -99,7 +92,6 @@ const List:FC=()=>{
                                 <div>
                                     <Link to={'/user/userDetail'} onClick={()=> {
                                         setScrollState(window.pageYOffset)
-                                        // setCurrent(currentPage)
                                     }}><h2 className={'text-blue-400'}>詳情</h2></Link>
                                 </div>
                             </div>

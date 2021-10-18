@@ -1,5 +1,5 @@
 import request from './http'
-import {IUserInfo,IUserList,UploadInfo} from"../types/storeTypes"
+import {IUserInfo,IUserList,UploadInfo,IAllUserList,IUserParam} from"../types/storeTypes"
 import {AxiosResponse} from "axios";
 
 
@@ -36,14 +36,14 @@ Upload:{
     return request.post<FormData,AxiosResponse<UploadInfo>>('/users/uploadPicture',formData,config)
   }
 },
-// User:{
-//   updateUsername(data,config){
-//     return request.put('/users/updateName',data,config)
-//   },
-//   getList(config){
-//     return request.get('/users?', config)
-//   }
-// }
+User:{
+  // updateUsername(data){
+  //   return request.put('/users/updateName',data,config)
+  // },
+  getList(params:IUserParam) {
+    return request.get<IUserParam, AxiosResponse<IAllUserList>>('/users?', {...config, params})
+  }
+}
 
 }
 
