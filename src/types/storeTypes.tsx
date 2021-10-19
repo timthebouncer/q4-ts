@@ -36,3 +36,17 @@ export interface IUserParam{
     page: number;
     size: number;
 }
+
+export interface IRouter {
+    path:string;
+    name?:string;
+    exact?:boolean;
+    component?:any;
+    props?:any
+    routes?:IRoutes[]
+}
+export interface IRoutes {
+    path:string;
+    name:string;
+    component:any;
+}

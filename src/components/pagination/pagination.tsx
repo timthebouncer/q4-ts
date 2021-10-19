@@ -1,14 +1,14 @@
-import React, {Dispatch, SetStateAction} from 'react'
+import React, {Dispatch, FC, SetStateAction} from 'react'
 import Pages from './pages'
 
 
 interface IProp {
-    totalPage:number ;
+    totalPage:number;
     currentPage:number;
     setCurrent:Dispatch<SetStateAction<number>>
 }
 
-const Pagination=({totalPage,currentPage,setCurrent}:IProp)=>{
+const Pagination:FC<IProp>=({totalPage, currentPage, setCurrent})=>{
 
 
     let total = 0;

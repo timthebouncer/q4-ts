@@ -3,7 +3,7 @@ import React, {useState, Suspense, FC, ReactNode, Dispatch, SetStateAction} from
 import { createContext } from 'use-context-selector';
 import routes from "./route/route";
 import {Switch, Route, BrowserRouter as Router} from 'react-router-dom'
-import {IUserInfo,IUserList, IAllUserList,IProp} from './types/storeTypes'
+import {IUserInfo,IUserList, IAllUserList,IProp,IRoutes} from './types/storeTypes'
 
        export const authContext = createContext<{ userData: IUserInfo | null, setUserData: Dispatch<SetStateAction<IUserInfo | null>> }>(null as any)
        export const userListContext = createContext<{ userList: IUserList | null, setUserList:Dispatch<SetStateAction<IUserList | null>> }>(null as any)
@@ -55,7 +55,6 @@ function App() {
     // }
 
 
-
   return (
       <Router>
         <div className='app-wrapper'>
@@ -67,7 +66,7 @@ function App() {
                    {routes.map((item, i) => {
                        return(
                            <Route key={i} {...item} path={item.path} exact={item.exact} component={item.routes? ()=>{
-                               return item.routes.map((route,idx)=>{
+                               return (item.routes as IRoutes[]).map((route,idx)=>{
                                    return(
                                        <Switch>
                                            <Route key={idx} path={route.path} component={route.component} />

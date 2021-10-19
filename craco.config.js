@@ -3,6 +3,16 @@ autoprefixer = require('autoprefixer')
 const CracoAlias = require("craco-alias");
 
 module.exports = {
+  plugins: [
+    {
+      plugin: CracoAlias,
+      options: {
+        source: "tsconfig",
+        baseUrl: "./",
+        tsConfigPath: "./tsconfig.paths.json"
+      }
+    }
+  ],
   style: {
     postcss: {
       plugins: [
@@ -11,19 +21,9 @@ module.exports = {
       ],
     },
   },
-  // plugins: [
-  //   {
-  //     plugin: CracoAlias,
-  //     options: {
-  //       source: "tsconfig",
-  //       baseUrl: "./src",
-  //       tsConfigPath: "./tsconfig.paths.json"
+  // webpack: {
+  //     alias: {
+  //       '@': path.resolve(__dirname, './src/')
   //     }
-  //   }
-  // ],
-  webpack: {
-      alias: {
-        '@': path.resolve(__dirname, './src/')
-      }
-  }
+  // }
 }

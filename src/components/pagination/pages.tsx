@@ -9,11 +9,13 @@ interface IProp {
   setCurrent:Dispatch<SetStateAction<number>>
 }
 
-const Pages:FC=(props:IProp)=>{
-  const {total,currentPage,setCurrent} = props
+
+const Pages:FC<IProp>=({total,currentPage,setCurrent})=>{
   let pages =[];
-  const pageClick=(i,val)=>{
-    if(i === parseInt(val)-1){
+
+  const pageClick = (e:  React.MouseEvent<HTMLLIElement>,i:number) => {
+    const value = e.target as HTMLElement;
+    if(i === parseInt(value.innerHTML)-1){
       setCurrent(i)
     }
   }
@@ -29,15 +31,13 @@ const Pages:FC=(props:IProp)=>{
 
 
   for (let i = 0; i < total; i++) {
-    pages.push(<li key={i} onClick={(e:React.MouseEvent<HTMLElement>)=>pageClick(i as number, e.target.innerHTML as any)} className={ currentPage === i? 'active':'unactivated'}>{i+1}</li>)
+    pages.push(<li key={i} onClick={(e)=>pageClick(e,i)} className={ currentPage === i? 'active':'unactivated'}>{i+1}</li>)
   }
   pages.unshift(<span className={'mt-1'} onClick={pageLeft}>{chevronLeft}</span>)
   pages.push(<span className={'mt-1'} onClick={pageRight}>{chevronRight}</span>)
-  return pages
 
-
+  return <div className={'flex'}>{pages}</div>
 
 }
-
 
 export default Pages

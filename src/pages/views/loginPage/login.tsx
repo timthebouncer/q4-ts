@@ -1,12 +1,13 @@
 import React, {ChangeEvent, FC, useState} from 'react'
 import service from "../../../api/api";
-import {authContext} from '../../../App'
+import {authContext} from '@/App'
 import { useHistory } from "react-router-dom";
 import {Link} from "react-router-dom";
 import './index.css'
 import message from '../../../components/toast/toast'
-
 import {useContextSelector} from "use-context-selector";
+import Form from "../../../components/form/form";
+import TextInput from '@/components/form/input'
 
 
 const initialState = {
@@ -18,9 +19,9 @@ const Login:FC=()=>{
     const [state, setState]= useState(initialState)
     const [setUserData]= useContextSelector(authContext,e=>[e.setUserData])
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setState({ ...state, [event.target.name]: event.target.value });
-    };
+    // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     setState({ ...state, [event.target.name]: event.target.value });
+    // };
 
     const loginFun=async()=>{
         await service.Login.userLogin(state)
@@ -45,12 +46,21 @@ const Login:FC=()=>{
         <div className="login-wrapper">
             <h1 className="text-center">登入</h1>
             <div className="sign-in">
-                <div  className="formWrapper">
-                    帳號<input name='username' onChange={handleChange} type="text"/>
-                    密碼<input name='password' onChange={handleChange} type="text"/>
+                    {/*<Form className="formWrapper">*/}
+                        <TextInput  name="username"
+                                    placeholder="請輸入帳號"
+                                    label="帳號"
+                                    type={'text'}
+                        />
+                        <TextInput  name="password"
+                                    placeholder="請輸入帳號"
+                                    label="密碼"
+                                    type='password'
+                        />
+                    {/*</Form>*/}
+                    {/*密碼<input name='password' onChange={handleChange} type="text"/>*/}
                     <Link className="register-btn" to='/register'>註冊</Link>
-                    <button className="submit-btn" onClick={loginFun}>登入</button>
-                </div>
+                    <button type="submit" className="submit-btn" onClick={loginFun}>登入</button>
             </div>
         </div>
     )
