@@ -1,11 +1,13 @@
-import React, {Dispatch, FC, SetStateAction, useState} from "react";
+import React, {Dispatch, FC, MouseEvent,FormEventHandler, SetStateAction, useState} from "react";
 import Input from "./input";
-import { createContext } from 'use-context-selector';
+import {createContext, useContextSelector} from 'use-context-selector';
 import {IUserInfo} from "@/types/storeTypes";
+import RenderForm from "@components/form/renderForm";
 
 
 interface IProps{
     className:string;
+    onSubmit: (userInfo: IUser)=>void;
 }
 
 interface IUser {
@@ -17,19 +19,12 @@ let initialState:IUser={
     password:''
 }
 
-interface IInput {
-    name:string;
-    label:string;
-    placeholder:string;
-    type:string;
-}
 
 
   export const userInput = createContext<{userInfo:IUser, setUserInfo:Dispatch<SetStateAction<IUser>>}>(null as any)
 
 
-const Form:FC<IProps>=({className,children})=>{
-
+const Form:FC<IProps>=({className,children,onSubmit})=>{
     const UserInputProvider:FC=({children})=>{
         const[userInfo, setUserInfo] = useState<IUser>(initialState)
 
@@ -41,14 +36,12 @@ const Form:FC<IProps>=({className,children})=>{
 
     }
 
-
     return(
-            <div className={className}>
-                <UserInputProvider>
-                    {children}
-                </UserInputProvider>
-            </div>
+        <UserInputProvider>
+        <RenderForm onSubmit={onSubmit} className={className} children={children}/>
+        </UserInputProvider>
         )
 }
 
 export default Form
+

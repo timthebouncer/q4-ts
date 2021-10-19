@@ -6,28 +6,33 @@ import {Link} from "react-router-dom";
 import './index.css'
 import message from '../../../components/toast/toast'
 import {useContextSelector} from "use-context-selector";
-import Form from "../../../components/form/form";
+import Form from "@/components/form/form";
 import TextInput from '@/components/form/input'
-
 
 const initialState = {
     username: '',
     password: '',
 };
+
+interface IUser {
+    username:string;
+    password:string;
+}
 const Login:FC=()=>{
     const history = useHistory()
     const [state, setState]= useState(initialState)
     const [setUserData]= useContextSelector(authContext,e=>[e.setUserData])
 
+
+
     // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     //     setState({ ...state, [event.target.name]: event.target.value });
     // };
 
-    const loginFun=async()=>{
-        await service.Login.userLogin(state)
+    const loginFun=async(data:IUser)=>{
+        await service.Login.userLogin(data)
             .then((res)=>{
                 console.log(res)
-
                 if (res.data.token != null) {
                     localStorage.setItem('token', res.data.token)
                     setUserData(res.data)
@@ -46,7 +51,7 @@ const Login:FC=()=>{
         <div className="login-wrapper">
             <h1 className="text-center">登入</h1>
             <div className="sign-in">
-                    <Form className="formWrapper">
+                    <Form className="formWrapper" onSubmit={data=>loginFun(data)}>
                         <TextInput  name="username"
                                     placeholder="請輸入帳號"
                                     label="帳號"
@@ -57,9 +62,10 @@ const Login:FC=()=>{
                                     label="密碼"
                                     type='password'
                         />
-                    </Form>
+
                     <Link className="register-btn" to='/register'>註冊</Link>
-                    <button type="submit" className="submit-btn" onClick={loginFun}>登入</button>
+                    <button type="submit" className="submit-btn">登入</button>
+                    </Form>
             </div>
         </div>
     )
