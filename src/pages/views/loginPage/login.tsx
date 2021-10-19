@@ -46,7 +46,7 @@ const Login:FC=()=>{
         <div className="login-wrapper">
             <h1 className="text-center">登入</h1>
             <div className="sign-in">
-                    {/*<Form className="formWrapper">*/}
+                    <Form className="formWrapper">
                         <TextInput  name="username"
                                     placeholder="請輸入帳號"
                                     label="帳號"
@@ -57,8 +57,7 @@ const Login:FC=()=>{
                                     label="密碼"
                                     type='password'
                         />
-                    {/*</Form>*/}
-                    {/*密碼<input name='password' onChange={handleChange} type="text"/>*/}
+                    </Form>
                     <Link className="register-btn" to='/register'>註冊</Link>
                     <button type="submit" className="submit-btn" onClick={loginFun}>登入</button>
             </div>

@@ -28,10 +28,11 @@ interface IInput {
   export const userInput = createContext<{userInfo:IUser, setUserInfo:Dispatch<SetStateAction<IUser>>}>(null as any)
 
 
-const Form:FC<IProps>=({className})=>{
+const Form:FC<IProps>=({className,children})=>{
 
     const UserInputProvider:FC=({children})=>{
         const[userInfo, setUserInfo] = useState<IUser>(initialState)
+
         return(
         <userInput.Provider value={{userInfo, setUserInfo}}>
             {children}
@@ -44,7 +45,7 @@ const Form:FC<IProps>=({className})=>{
     return(
             <div className={className}>
                 <UserInputProvider>
-                    <Input />
+                    {children}
                 </UserInputProvider>
             </div>
         )
