@@ -27,7 +27,7 @@ const RouteWithSubRoutes:FC<Props>=({item,index,switchMenu})=> {
                   {direction ? <i onClick={()=>setDirection(false)} className={'mt-1.5'}>{chevronDown}</i> :
                           <i onClick={()=>setDirection(true)} className={'mt-1.5'}>{chevronUp}</i>
                   }</>:<>
-                <Tooltip text={item.name}>
+                <Tooltip text={item.name} placement={'right'} space={10}>
                         <span className={"m-0 h-8"}>
                         {userIcon}
                       </span>

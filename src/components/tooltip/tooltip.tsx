@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Portal from "@/components/tooltip/portal";
 import styled from 'styled-components'
 
-interface SSSS {
+interface styleProp {
   show: number
   posRef: {
     current: {
@@ -15,12 +15,12 @@ interface SSSS {
 
 const StyleToolTip = styled.span`
   position: fixed;
-  top: ${(p: SSSS) => p.posRef.current.y}px;
-  left: ${(p: SSSS) => p.posRef.current.x}px;
+  top: ${(p: styleProp) => p.posRef.current.y}px;
+  left: ${(p: styleProp) => p.posRef.current.x}px;
   background: white;
   border: 1px white;
   z-index:9999;
-  opacity:${(p: SSSS)=>p.show}
+  opacity:${(p: styleProp)=>p.show}
 `;
 
 const getPoint=(el: EventTarget & HTMLInputElement, tt: HTMLSpanElement, placement:string, space:number)=>{
@@ -68,6 +68,4 @@ const ToolTip:FC<IProps>=({text, placement='right', space=10, children})=>{
 
 
 export default ToolTip
-// {
-//  toolTip:(type,name,e)=>showToolTip(type,name,e)
-// }
+
