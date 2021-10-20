@@ -1,7 +1,7 @@
 import React, {Dispatch, FC, MouseEvent,FormEventHandler, SetStateAction, useState} from "react";
 import Input from "./input";
 import {createContext, useContextSelector} from 'use-context-selector';
-import {IUserInfo} from "@/types/storeTypes";
+import {IRegister} from "@/types/storeTypes";
 import RenderForm from "@components/form/renderForm";
 
 
@@ -26,7 +26,7 @@ let initialState:IUser={
 
 const Form:FC<IProps>=({className,children,onSubmit})=>{
     const UserInputProvider:FC=({children})=>{
-        const[userInfo, setUserInfo] = useState<IUser>(initialState)
+        const[userInfo, setUserInfo] = useState<IUser | IRegister>(initialState)
 
         return(
         <userInput.Provider value={{userInfo, setUserInfo}}>

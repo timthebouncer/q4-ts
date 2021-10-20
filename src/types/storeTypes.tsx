@@ -50,3 +50,15 @@ export interface IRoutes {
     name:string;
     component:any;
 }
+export interface IUser {
+    username:string;
+    password:string;
+}
+
+export interface IRegister extends IUser{
+    name?:string | null
+}
+export interface IRegisterRes {
+    message:string;
+    success: boolean
+}

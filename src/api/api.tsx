@@ -1,5 +1,5 @@
 import request from './http'
-import {IUserInfo,IUserList,UploadInfo,IAllUserList,IUserParam} from"../types/storeTypes"
+import {IUserInfo,IUserList,UploadInfo,IAllUserList,IUserParam,IRegister,IRegisterRes} from"../types/storeTypes"
 import {AxiosResponse} from "axios";
 
 
@@ -21,11 +21,11 @@ Login:{
     },AxiosResponse<IUserInfo>>('/login', data)
   },
 },
-// Register:{
-//   userRegister(data){
-//     return request.post('/register',data)
-//   }
-// },
+Register:{
+  userRegister(data:IRegister){
+    return request.post<IRegister,AxiosResponse<IRegisterRes>>('/register',data)
+  }
+},
 Auth:{
   userAuth(){
     return request.get<AxiosResponse<IUserList>>('/user',config)

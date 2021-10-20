@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React, {useState,FC} from "react";
 import {userIcon, chevronDown, chevronUp} from '../Icon/svg'
-// import ToolTip from "../components/";
+import Tooltip from "@/components/tooltip/tooltip";
 
 type Props={
   item:any
@@ -27,11 +27,11 @@ const RouteWithSubRoutes:FC<Props>=({item,index,switchMenu})=> {
                   {direction ? <i onClick={()=>setDirection(false)} className={'mt-1.5'}>{chevronDown}</i> :
                           <i onClick={()=>setDirection(true)} className={'mt-1.5'}>{chevronUp}</i>
                   }</>:<>
-                {/*<ToolTip text={item.name}>*/}
+                <Tooltip text={item.name}>
                         <span className={"m-0 h-8"}>
                         {userIcon}
                       </span>
-                {/*</ToolTip>*/}
+                </Tooltip>
               </>
             }
           </li>

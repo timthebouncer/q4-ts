@@ -8,16 +8,17 @@ import message from '../../../components/toast/toast'
 import {useContextSelector} from "use-context-selector";
 import Form from "@/components/form/form";
 import TextInput from '@/components/form/input'
+import {IUser} from '@/types/storeTypes'
 
 const initialState = {
     username: '',
     password: '',
 };
 
-interface IUser {
-    username:string;
-    password:string;
-}
+// interface IUser {
+//     username:string;
+//     password:string;
+// }
 const Login:FC=()=>{
     const history = useHistory()
     const [state, setState]= useState(initialState)
