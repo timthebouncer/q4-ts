@@ -22,7 +22,7 @@ const Layout:FC=({children})=>{
                         .then((res)=>{
                             response({success:true, data:res.data.data})
                         })
-                },500)
+                },1000)
 
             )
             if(success){

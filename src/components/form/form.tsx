@@ -14,22 +14,31 @@ interface IUser {
     username:string;
     password:string;
 }
+interface IError{
+    field:[];
+    error:string;
+}
+
 let initialState:IUser={
     username:'',
     password:''
 }
+let initialError:IError={
+    field:[],
+    error:''
+}
 
 
-
-  export const userInput = createContext<{userInfo:IUser, setUserInfo:Dispatch<SetStateAction<IUser>>}>(null as any)
+  export const userInput = createContext<{userInfo:IUser, setUserInfo:Dispatch<SetStateAction<IUser>>,formError:IError, setFormError:Dispatch<SetStateAction<IError>>}>(null as any)
 
 
 const Form:FC<IProps>=({className,children,onSubmit})=>{
     const UserInputProvider:FC=({children})=>{
         const[userInfo, setUserInfo] = useState<IUser | IRegister>(initialState)
+        const[formError, setFormError] = useState<IError>(initialError)
 
         return(
-        <userInput.Provider value={{userInfo, setUserInfo}}>
+        <userInput.Provider value={{userInfo, setUserInfo,formError, setFormError}}>
             {children}
         </userInput.Provider>
         )

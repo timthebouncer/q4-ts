@@ -15,10 +15,7 @@ const initialState = {
     password: '',
 };
 
-// interface IUser {
-//     username:string;
-//     password:string;
-// }
+
 const Login:FC=()=>{
     const history = useHistory()
     const [state, setState]= useState(initialState)

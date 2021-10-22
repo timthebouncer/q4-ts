@@ -20,8 +20,17 @@ const registerBtn=async (data:IRegister,history:any)=>{
         })
 }
 
+// const requiredValidator=(val)=>{
+//
+//     if(!val){
+//         return ['此處為必填']
+//     }
+//     return []
+// }
+
 const Register:FC=()=>{
     let history = useHistory()
+
 
     return(
         <div className="register-wrapper">

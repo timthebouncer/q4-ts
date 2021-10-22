@@ -13,7 +13,7 @@ interface IUser {
 }
 
 const RenderForm:FC<IProps>=({onSubmit,className,children})=>{
-    const [userInfo]= useContextSelector(userInput,e=>[e.userInfo])
+    const [userInfo]= useContextSelector(userInput,e=>[e.userInfo,e.formError,e.setFormError])
     const submitHandler=(e: { preventDefault: () => void; })=>{
         e.preventDefault()
         onSubmit(userInfo)
@@ -22,6 +22,7 @@ const RenderForm:FC<IProps>=({onSubmit,className,children})=>{
     return(
         <div className={className}>
                 <form
+                    style={{display: 'flex',flexDirection: 'column',alignItems: 'center'}}
                     onSubmit={submitHandler}
                 >
                     {children}
