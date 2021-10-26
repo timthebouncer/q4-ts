@@ -1,7 +1,6 @@
-import React, {Dispatch, FC, MouseEvent,FormEventHandler, SetStateAction, useState} from "react";
-import Input from "./input";
-import {createContext, useContextSelector} from 'use-context-selector';
-import {IRegister} from "@/types/storeTypes";
+import React, {Dispatch, FC, SetStateAction, useRef, useState} from "react";
+import {createContext} from 'use-context-selector';
+import {IUser,IRegister} from "@/types/storeTypes";
 import RenderForm from "@components/form/renderForm";
 
 
@@ -10,35 +9,25 @@ interface IProps{
     onSubmit: (userInfo: IUser)=>void;
 }
 
-interface IUser {
-    username:string;
-    password:string;
-}
-interface IError{
-    field:[];
-    error:string;
-}
 
 let initialState:IUser={
     username:'',
     password:''
 }
-let initialError:IError={
-    field:[],
-    error:''
-}
 
 
-  export const userInput = createContext<{userInfo:IUser, setUserInfo:Dispatch<SetStateAction<IUser>>,formError:IError, setFormError:Dispatch<SetStateAction<IError>>}>(null as any)
+  export const userInput = createContext<{inputRefs:React.MutableRefObject<Array<any>>,userInfo:IUser, setUserInfo:Dispatch<SetStateAction<IUser>>}>(null as any)
 
 
 const Form:FC<IProps>=({className,children,onSubmit})=>{
+
+
     const UserInputProvider:FC=({children})=>{
         const[userInfo, setUserInfo] = useState<IUser | IRegister>(initialState)
-        const[formError, setFormError] = useState<IError>(initialError)
+        const inputRefs = useRef<Array<any>>([]);
 
         return(
-        <userInput.Provider value={{userInfo, setUserInfo,formError, setFormError}}>
+        <userInput.Provider value={{userInfo, setUserInfo,inputRefs}}>
             {children}
         </userInput.Provider>
         )
